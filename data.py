@@ -201,3 +201,14 @@ def random_saturation(lr_img, hr_img):
 def random_rotate(lr_img, hr_img):
     rn = tf.random.uniform(shape=(), maxval=4, dtype=tf.int32)
     return tf.image.rot90(lr_img, rn), tf.image.rot90(hr_img, rn)
+
+# -----------------------------------------------------------
+#  IO
+# -----------------------------------------------------------
+
+
+def download_archive(file, target_dir, extract=True):
+    source_url = f'http://data.vision.ee.ethz.ch/cvl/DIV2K/{file}'
+    target_dir = os.path.abspath(target_dir)
+    tf.keras.utils.get_file(file, source_url, cache_subdir=target_dir, extract=extract)
+    os.remove(os.path.join(target_dir, file))
